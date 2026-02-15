@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* create(int val){
+    struct Node* n=(struct Node*)malloc(sizeof(struct Node));
+    n->data=val;
+    n->prev=NULL;
+    n->next=NULL;
+    return n;
+}
+
+void insertEnd(struct Node** head,int val){
+    struct Node* n=create(val);
+    if(*head==NULL){
+        *head=n;
+        return;
+    }
+    struct Node* temp=*head;
+    while(temp->next) temp=temp->next;
+    temp->next=n;
+    n->prev=temp;
+}
+
+void insertAfter(struct Node* node,int val){
+    if(node==NULL) return;
+    struct Node* n=create(val);
+    n->next=node->next;
+    n->prev=node;
+    if(node->next) node->next->prev=n;
+    node->next=n;
+}
+
+void display(struct Node* head){
+    while(head){
+        printf("%d ",head->data);
+        head=head->next;
+    }
+    printf("\n");
+}
+
+int main(){
+    struct Node* head=NULL;
+    insertEnd(&head,10);
+    insertEnd(&head,20);
+    insertEnd(&head,40);
+
+    insertAfter(head->next,30);
+
+    printf("List after insertAfter: ");
+    display(head);
+    return 0;
+}

@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 100
+
+int prec(char c){
+    if(c=='+'||c=='-') return 1;
+    if(c=='*'||c=='/') return 2;
+    if(c=='^') return 3;
+    return 0;
+}
+
+void infixToPostfix(char infix[], char postfix[]){
+    char stack[MAX];
+    int top=-1,k=0;
+    for(int i=0;infix[i];i++){
+        char c=infix[i];
+        if(isdigit(c)){
+            postfix[k++]=c;
+            postfix[k++]=' ';
+        }
+        else if(c=='(') stack[++top]=c;
+        else if(c==')'){
+            while(top>=0 && stack[top]!='('){
+                postfix[k++]=stack[top--];
+                postfix[k++]=' ';
+            }
+            top--;
+        }
+        else{
+            while(top>=0 && prec(stack[top])>=prec(c)){
+                postfix[k++]=stack[top--];
+                postfix[k++]=' ';
+            }
+            stack[++top]=c;
+        }
+    }
+    while(top>=0){
+        postfix[k++]=stack[top--];
+        postfix[k++]=' ';
+    }
+    postfix[k]='\0';
+}
+
+double evalPostfix(char postfix[]){
+    double stack[MAX];
+    int top=-1;
+    for(int i=0;postfix[i];i++){
+        if(isdigit(postfix[i])){
+            double num=0;
+            while(isdigit(postfix[i])){
+                num=num*10+(postfix[i]-'0');
+                i++;
+            }
+            stack[++top]=num;
+        }
+        else if(postfix[i]==' ') continue;
+        else{
+            double b=stack[top--];
+            double a=stack[top--];
+            switch(postfix[i]){
+                case '+': stack[++top]=a+b; break;
+                case '-': stack[++top]=a-b; break;
+                case '*': stack[++top]=a*b; break;
+                case '/': stack[++top]=a/b; break;
+                case '^': stack[++top]=pow(a,b); break;
+            }
+        }
+    }
+    return stack[top];
+}
+
+int main(){
+    char infix[MAX],postfix[MAX];
+    printf("Enter infix expression: ");
+    fgets(infix,sizeof(infix),stdin);
+    infix[strcspn(infix,"\n")]=0;
+    infixToPostfix(infix,postfix);
+    printf("Postfix: %s\n",postfix);
+    printf("Result: %.2lf\n",evalPostfix(postfix));
+    return 0;
+}
