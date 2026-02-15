@@ -36,6 +36,17 @@ void insertAfter(struct Node* node,int val){
     node->next=n;
 }
 
+void deleteNode(struct Node** head, struct Node* del){
+    if(*head==NULL || del==NULL) return;
+
+    if(*head==del) *head=del->next;
+
+    if(del->next) del->next->prev=del->prev;
+    if(del->prev) del->prev->next=del->next;
+
+    free(del);
+}
+
 void display(struct Node* head){
     while(head){
         printf("%d ",head->data);
@@ -46,13 +57,20 @@ void display(struct Node* head){
 
 int main(){
     struct Node* head=NULL;
+
     insertEnd(&head,10);
     insertEnd(&head,20);
     insertEnd(&head,40);
 
     insertAfter(head->next,30);
 
-    printf("List after insertAfter: ");
+    printf("After insertion: ");
     display(head);
+
+    deleteNode(&head, head->next);
+
+    printf("After deletion: ");
+    display(head);
+
     return 0;
 }
