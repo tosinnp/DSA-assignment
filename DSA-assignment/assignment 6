@@ -1,0 +1,14 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<int> arr = {10, 3, 5, 30, 2, 7, 12};
+
+    cout << "Original Array: ";
+    for(int num : arr)
+        cout << num << " ";
+    cout << endl;
+
+    return 0;
+}
