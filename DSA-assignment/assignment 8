@@ -63,9 +63,28 @@ int main() {
     printf("1. Bubble Sort\n");
     printf("2. Selection Sort\n");
     printf("3. Insertion Sort\n");
-    printf("4. Merge Sort\n");
-    printf("Enter your choice (1-4): ");
+    printf("Enter your choice (1-3): ");
     scanf("%d", &choice);
+
+    switch(choice) {
+        case 1:
+            bubbleSort(arr, N);
+            break;
+        case 2:
+            selectionSort(arr, N);
+            break;
+        case 3:
+            insertionSort(arr, N);
+            break;
+        default:
+            printf("Invalid choice!\n");
+            return 0;
+    }
+
+    printf("\nNumbers After Sorting:\n");
+    for(int i = 0; i < N; i++) {
+        printf("%d ", arr[i]);
+    }
 
     return 0;
 }
