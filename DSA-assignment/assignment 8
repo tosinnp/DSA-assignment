@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX 1000
+
+int main() {
+    int N, choice;
+    int arr[MAX];
+
+    printf("Enter the number of random integers (N): ");
+    scanf("%d", &N);
+
+    srand(time(0));
+
+    // Generate random numbers 
+    for(int i = 0; i < N; i++) {
+        arr[i] = rand() % 1000 + 1;
+    }
+
+    printf("\nGenerated Numbers:\n");
+    for(int i = 0; i < N; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n\nChoose Sorting Algorithm:\n");
+    printf("1. Bubble Sort\n");
+    printf("2. Selection Sort\n");
+    printf("3. Insertion Sort\n");
+    printf("4. Merge Sort\n");
+    printf("Enter your choice (1-4): ");
+    scanf("%d", &choice);

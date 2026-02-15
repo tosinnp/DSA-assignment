@@ -27,10 +27,9 @@ int main() {
     // Dijkstra's algorithm
     for(int i=0; i<n; i++) {
         int u = -1;
-        for(int j=0; j<n; j++) {
+        for(int j=0; j<n; j++)
             if(!visited[j] && (u == -1 || dist[j] < dist[u]))
                 u = j;
-        }
 
         if(dist[u] == INT_MAX) break;
 
@@ -44,7 +43,14 @@ int main() {
         }
     }
 
-    cout << "Dijkstra's algorithm computed distances." << endl;
+    // Print shortest distances
+    cout << "Shortest distances from node " << src << ":" << endl;
+    for(int i=0; i<n; i++) {
+        if(dist[i] == INT_MAX)
+            cout << i << " : INF" << endl;
+        else
+            cout << i << " : " << dist[i] << endl;
+    }
 
     return 0;
 }
