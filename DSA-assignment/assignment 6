@@ -2,12 +2,43 @@
 #include <vector>
 using namespace std;
 
+// Heapify function for min-heap
+void minHeapify(vector<int>& heap, int n, int i) {
+    int smallest = i;
+    int left = 2*i + 1;
+    int right = 2*i + 2;
+
+    if(left < n && heap[left] < heap[smallest])
+        smallest = left;
+
+    if(right < n && heap[right] < heap[smallest])
+        smallest = right;
+
+    if(smallest != i) {
+        swap(heap[i], heap[smallest]);
+        minHeapify(heap, n, smallest);
+    }
+}
+
+// Build min-heap
+void buildMinHeap(vector<int>& heap) {
+    int n = heap.size();
+    for(int i = n/2 - 1; i >= 0; i--) {
+        minHeapify(heap, n, i);
+    }
+}
+
 int main() {
     vector<int> arr = {10, 3, 5, 30, 2, 7, 12};
 
     cout << "Original Array: ";
-    for(int num : arr)
-        cout << num << " ";
+    for(int num : arr) cout << num << " ";
+    cout << endl;
+
+    buildMinHeap(arr);
+
+    cout << "Min-Heap: ";
+    for(int num : arr) cout << num << " ";
     cout << endl;
 
     return 0;
